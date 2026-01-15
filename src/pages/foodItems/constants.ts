@@ -1,0 +1,68 @@
+import type { FoodItem } from './types'
+
+export const mockFoodItems: FoodItem[] = [
+  {
+    id: 1,
+    name: 'Adobo',
+    description: 'Chicken in savory brown sauce',
+    price: 285,
+    category: ['Meat', 'Filipino', 'Comfort Food'],
+    sizes: ['Regular', 'Large'],
+  },
+  {
+    id: 2,
+    name: 'Sinigang',
+    description: 'Pork in sour tamarind broth',
+    price: 295,
+    category: ['Meat', 'Filipino', 'Soup'],
+    sizes: ['Regular', 'Large'],
+  },
+  {
+    id: 3,
+    name: 'Kare-Kare',
+    description: 'Meat stew with peanut sauce',
+    price: 320,
+    category: ['Meat', 'Filipino', 'Stew'],
+    sizes: ['Regular', 'Large'],
+  },
+  {
+    id: 4,
+    name: 'Laing',
+    description: 'Taro leaves in coconut milk',
+    price: 185,
+    category: ['Vegetable', 'Filipino', 'Side'],
+    sizes: ['Regular', 'Large'],
+  },
+  {
+    id: 5,
+    name: 'Lumpia',
+    description: 'Spring rolls with meat filling',
+    price: 145,
+    category: ['Appetizer', 'Filipino', 'Fried'],
+    sizes: ['3 pcs', '6 pcs', '12 pcs'],
+  },
+  {
+    id: 6,
+    name: 'Lechon Paksiw',
+    description: 'Roasted pork in vinegar sauce',
+    price: 350,
+    category: ['Meat', 'Filipino', 'Special'],
+    sizes: ['Regular', 'Large'],
+  },
+  {
+    id: 7,
+    name: 'Halo-Halo',
+    description: 'Mixed shaved ice dessert',
+    price: 95,
+    category: ['Dessert', 'Filipino', 'Cold'],
+    sizes: ['Small', 'Large'],
+  },
+  {
+    id: 8,
+    name: 'Ube Cake',
+    description: 'Purple yam cake',
+    price: 75,
+    category: ['Dessert', 'Filipino', 'Pastry'],
+    sizes: ['Slice', 'Whole'],
+  },
+]
