@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import type { FoodItem, FoodItemStats } from './types'
 
 export interface UseFoodItemsReturn {
@@ -7,8 +7,8 @@ export interface UseFoodItemsReturn {
   stats: FoodItemStats
   searchTerm: string
   setSearchTerm: (term: string) => void
-  selectedCategory: string
-  setSelectedCategory: (category: string) => void
+  selectedCategories: string[]
+  setSelectedCategories: (categories: string[]) => void
   allCategories: string[]
   handleEdit: (itemId: number) => void
   handleDelete: (itemId: number) => void
@@ -17,7 +17,7 @@ export interface UseFoodItemsReturn {
 export function useFoodItems(initialItems: FoodItem[]): UseFoodItemsReturn {
   const [items] = useState<FoodItem[]>(initialItems)
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   // Get unique categories from all items
   const allCategories = useMemo(() => {
@@ -31,11 +31,12 @@ export function useFoodItems(initialItems: FoodItem[]): UseFoodItemsReturn {
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.description.toLowerCase().includes(searchTerm.toLowerCase())
 
-      const matchesCategory = !selectedCategory || item.category.includes(selectedCategory)
+      // If no categories selected, show all. Otherwise, show items that match any selected category
+      const matchesCategory = selectedCategories.length === 0 || item.category.some((cat) => selectedCategories.includes(cat))
 
       return matchesSearch && matchesCategory
     })
-  }, [items, searchTerm, selectedCategory])
+  }, [items, searchTerm, selectedCategories])
 
   // Calculate statistics
   const stats: FoodItemStats = {
@@ -44,15 +45,15 @@ export function useFoodItems(initialItems: FoodItem[]): UseFoodItemsReturn {
     categories: allCategories.length,
   }
 
-  const handleEdit = (itemId: number) => {
+  const handleEdit = useCallback((itemId: number) => {
     console.log('Edit item:', itemId)
     // TODO: Open edit modal or navigate to edit form
-  }
+  }, [])
 
-  const handleDelete = (itemId: number) => {
+  const handleDelete = useCallback((itemId: number) => {
     console.log('Delete item:', itemId)
     // TODO: Delete item from list
-  }
+  }, [])
 
   return {
     items,
@@ -60,8 +61,8 @@ export function useFoodItems(initialItems: FoodItem[]): UseFoodItemsReturn {
     stats,
     searchTerm,
     setSearchTerm,
-    selectedCategory,
-    setSelectedCategory,
+    selectedCategories,
+    setSelectedCategories,
     allCategories,
     handleEdit,
     handleDelete,

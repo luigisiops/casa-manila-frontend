@@ -1,19 +1,20 @@
-import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import { FormControl, Typography, Autocomplete, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import { memo } from 'react'
 import { FilterGrid, FilterSection, SearchField } from './styles'
 
 interface FoodItemsFiltersProps {
   searchTerm: string
   onSearchChange: (term: string) => void
-  selectedCategory: string
-  onCategoryChange: (category: string) => void
+  selectedCategories: string[]
+  onCategoryChange: (categories: string[]) => void
   categories: string[]
 }
 
-export function FoodItemsFilters({
+export const FoodItemsFilters = memo(function FoodItemsFilters({
   searchTerm,
   onSearchChange,
-  selectedCategory,
+  selectedCategories,
   onCategoryChange,
   categories,
 }: FoodItemsFiltersProps) {
@@ -29,31 +30,48 @@ export function FoodItemsFilters({
           size="small"
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          InputProps={{
-            startAdornment: <SearchIcon sx={{ mr: 1, color: 'action.active' }} />,
+          slotProps={{
+            input: {
+              startAdornment: <SearchIcon sx={{ mr: 1, color: 'action.active' }} />,
+            },
           }}
           fullWidth
         />
         <FormControl size="small" fullWidth>
-          <InputLabel>Category</InputLabel>
-          <Select
-            value={selectedCategory}
-            onChange={(e) => onCategoryChange(e.target.value)}
-            label="Category"
+          <Autocomplete
+            multiple
+            options={categories}
+            value={selectedCategories}
+            onChange={(_, newValue) => onCategoryChange(newValue)}
+            size="small"
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Categories"
+                placeholder="Select categories..."
+                size="small"
+                sx={{
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#2d3748' : '#f5f8fc',
+                }}
+              />
+            )}
             sx={{
               backgroundColor: (theme) =>
                 theme.palette.mode === 'dark' ? '#2d3748' : '#f5f8fc',
             }}
-          >
-            <MenuItem value="">All Categories</MenuItem>
-            {categories.map((cat) => (
-              <MenuItem key={cat} value={cat}>
-                {cat}
-              </MenuItem>
-            ))}
-          </Select>
+            slotProps={{
+              paper: {
+                sx: {
+                  '& .MuiAutocomplete-listbox': {
+                    fontSize: '0.875rem',
+                  },
+                },
+              },
+            }}
+          />
         </FormControl>
       </FilterGrid>
     </FilterSection>
   )
-}
+})

@@ -1,12 +1,13 @@
 import AddIcon from '@mui/icons-material/Add'
+import { memo } from 'react'
 import { PageContainer, PageTitle, HeaderBox, AddButton, StatsBox, StatCard, StatNumber, StatLabel } from './styles'
 import { FoodItemsFilters } from './FoodItemsFilters'
 import { FoodItemsTable } from './FoodItemsTable'
 import { useFoodItems } from './useFoodItems'
 import { mockFoodItems } from './constants'
 
-export default function FoodItemsPage() {
-  const { filteredItems, stats, searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, allCategories, handleEdit, handleDelete } = useFoodItems(mockFoodItems)
+export default memo(function FoodItemsPage() {
+  const { filteredItems, stats, searchTerm, setSearchTerm, selectedCategories, setSelectedCategories, allCategories, handleEdit, handleDelete } = useFoodItems(mockFoodItems)
 
   return (
     <PageContainer maxWidth="lg">
@@ -44,8 +45,8 @@ export default function FoodItemsPage() {
       <FoodItemsFilters
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
+        selectedCategories={selectedCategories}
+        onCategoryChange={setSelectedCategories}
         categories={allCategories}
       />
 
@@ -53,4 +54,4 @@ export default function FoodItemsPage() {
       <FoodItemsTable items={filteredItems} onEdit={handleEdit} onDelete={handleDelete} />
     </PageContainer>
   )
-}
+})
