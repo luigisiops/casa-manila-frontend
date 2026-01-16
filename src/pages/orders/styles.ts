@@ -120,6 +120,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const SubtotalCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 600,
   color: theme.palette.primary.main,
+  borderBottom: 'none !important',
 }))
 
 // Tabs
