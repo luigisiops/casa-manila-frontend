@@ -96,6 +96,16 @@ export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
     typography: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     },
+    components: {
+      MuiDrawer: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: COLOR_PALETTE.sidebar,
+            borderRight: `1px solid ${COLOR_PALETTE.darkDivider}`,
+          },
+        },
+      },
+    },
   })
 
   return (

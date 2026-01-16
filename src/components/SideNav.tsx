@@ -7,15 +7,6 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import { useThemeMode } from '../contexts/ThemeContext'
 
-// Sidebar Color Palette
-const SIDEBAR_COLORS = {
-  background: '#1f2937',
-  text: '#f3f4f6',
-  textSecondary: '#9ca3af',
-  selectedBg: '#374151',
-  hoverBg: '#2d3748',
-  divider: '#2d3748',
-}
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   width: 280,
   display: 'flex',
@@ -24,8 +15,6 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     width: 280,
     boxSizing: 'border-box',
-    backgroundColor: '#161c32',
-    borderRight: `1px solid ${theme.palette.divider}`,
   },
 }))
 
@@ -33,33 +22,33 @@ const DrawerHeader = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(3),
-    borderBottom: `1px solid ${SIDEBAR_COLORS.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
     alignItems: 'center',
     justifyContent: 'center',
 }))
 
 const DrawerTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
-  color: SIDEBAR_COLORS.text,
+  color: '#f3f4f6',
   marginBottom: theme.spacing(0.5),
 }))
 
 const DrawerSubtitle = styled(Typography)({
-  color: SIDEBAR_COLORS.textSecondary,
+  color: '#9ca3af',
 })
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-  color: SIDEBAR_COLORS.text,
+  color: '#f3f4f6',
   '&.Mui-selected': {
-    backgroundColor: SIDEBAR_COLORS.selectedBg,
+    backgroundColor: '#374151',
     color: theme.palette.primary.main,
     fontWeight: 600,
     '&:hover': {
-      backgroundColor: SIDEBAR_COLORS.selectedBg,
+      backgroundColor: '#374151',
     },
   },
   '&:hover': {
-    backgroundColor: SIDEBAR_COLORS.hoverBg,
+    backgroundColor: '#2d3748',
   },
 })) as typeof ListItemButton
 
@@ -68,7 +57,7 @@ const DrawerFooter = styled(Box)(({ theme }) => ({
 }))
 
 const FooterText = styled(Typography)({
-  color: SIDEBAR_COLORS.textSecondary,
+  color: '#9ca3af',
 })
 
 export default function SideNav() {
@@ -123,7 +112,7 @@ export default function SideNav() {
           <IconButton
             onClick={toggleTheme}
             size="small"
-            sx={{ color: SIDEBAR_COLORS.text }}
+            sx={{ color: '#f3f4f6' }}
             title={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
           >
             {mode === 'light' ? <DarkModeIcon fontSize="small" /> : <LightModeIcon fontSize="small" />}
