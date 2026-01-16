@@ -40,7 +40,7 @@ const DrawerHeader = styled(Box)(({ theme }) => ({
 
 const DrawerTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
-  color: theme.palette.primary.main,
+  color: SIDEBAR_COLORS.text,
   marginBottom: theme.spacing(0.5),
 }))
 
