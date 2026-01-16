@@ -29,8 +29,11 @@ export function OrdersFilters({
           size="small"
           value={searchTerm}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
-          InputProps={{
-            startAdornment: <SearchIcon sx={{ mr: 1, color: 'action.active' }} />,
+          slotProps={{
+            input: {
+            //Material-UI TextField prop that adds a visual element at the beginning (left side) of the input field
+              startAdornment: <SearchIcon sx={{ mr: 1, color: 'action.active' }} />,
+            },
           }}
           fullWidth
         />

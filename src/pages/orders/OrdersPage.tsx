@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add'
 import Tab from '@mui/material/Tab'
+import { TextField, Box, Typography } from '@mui/material'
 import {
   PageContainer,
   PageTitle,
@@ -26,11 +27,22 @@ export default function OrdersPage() {
     setSelectedStore,
     activeTab,
     setActiveTab,
+    selectedDate,
+    setSelectedDate,
     allStores,
     handleEdit,
     handleDelete,
     handleStatusChange,
   } = useOrders(mockOrders)
+
+  const formatDisplayDate = (dateString: string) => {
+    return new Date(dateString + 'T00:00:00').toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  }
 
   return (
     <PageContainer maxWidth="lg">
@@ -77,14 +89,34 @@ export default function OrdersPage() {
         stores={allStores}
       />
 
+      {/* Date Picker and Display */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 3 }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          {formatDisplayDate(selectedDate)}
+        </Typography>
+        <TextField
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          size="small"
+          sx={{ width: '180px' }}
+          slotProps={{
+            inputLabel: {
+              shrink: true,
+            },
+          }}
+        />
+      </Box>
+
       {/* Tab Navigation */}
       <StyledTabs
-        value={{ active: 0, packed: 1, completed: 2 }[activeTab]}
-        onChange={(_, newValue) => setActiveTab(['active', 'packed', 'completed'][newValue] as 'active' | 'packed' | 'completed')}
+        value={{ active: 0, packed: 1, completed: 2, all: 3 }[activeTab]}
+        onChange={(_, newValue) => setActiveTab(['active', 'packed', 'completed', 'all'][newValue] as 'active' | 'packed' | 'completed' | 'all')}
       >
         <Tab label="Active" />
         <Tab label="Packed" />
         <Tab label="Completed" />
+        <Tab label="View All" />
       </StyledTabs>
 
       {/* Table */}

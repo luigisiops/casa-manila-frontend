@@ -8,6 +8,8 @@ export interface OrderItem {
 
 export type OrderStatus = 'active' | 'packed' | 'completed'
 
+export type OrderTabStatus = OrderStatus | 'all'
+
 export interface Order {
   id: number
   customer_name: string

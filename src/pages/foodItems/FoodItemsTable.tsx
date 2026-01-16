@@ -1,21 +1,11 @@
 import { useState } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-  Box,
-  Chip,
-  IconButton,
-  Menu,
-  MenuItem,
-} from '@mui/material'
+import { IconButton, Menu, MenuItem, Box, Chip, Typography } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { DataTable, type Column } from '../../components/DataTable'
+import { PriceCell } from './styles'
 import type { FoodItem } from './types'
-import { StyledTableContainer, StyledTableHead, StyledTableRow, PriceCell } from './styles'
 
 interface FoodItemsTableProps {
   items: FoodItem[]
@@ -51,78 +41,83 @@ export function FoodItemsTable({ items, onEdit, onDelete }: FoodItemsTableProps)
     handleMenuClose()
   }
 
+  const columns: Column<FoodItem>[] = [
+    {
+      id: 'name',
+      label: 'Name',
+      render: (_, item) => (
+        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+          {item.name}
+        </Typography>
+      ),
+    },
+    {
+      id: 'description',
+      label: 'Description',
+      render: (value) => (
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {value}
+        </Typography>
+      ),
+    },
+    {
+      id: 'price',
+      label: 'Price ($)',
+      align: 'right',
+      render: (_, item) => <PriceCell align="right">${item.price.toFixed(2)}</PriceCell>,
+    },
+    {
+      id: 'category',
+      label: 'Category',
+      render: (_, item) => (
+        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+          {item.category.map((cat) => (
+            <Chip key={cat} label={cat} size="small" variant="outlined" />
+          ))}
+        </Box>
+      ),
+    },
+    {
+      id: 'sizes',
+      label: 'Sizes',
+      render: (_, item) => (
+        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+          {item.sizes.map((size) => (
+            <Chip
+              key={size}
+              label={size}
+              size="small"
+              color="primary"
+              variant="filled"
+            />
+          ))}
+        </Box>
+      ),
+    },
+    {
+      id: 'actions',
+      label: 'Actions',
+      align: 'center',
+      render: (_, item) => (
+        <IconButton
+          size="small"
+          onClick={(e) => handleMenuOpen(e, item.id)}
+          title="More options"
+        >
+          <MoreVertIcon fontSize="small" />
+        </IconButton>
+      ),
+    },
+  ]
+
   return (
     <>
-      <StyledTableContainer>
-        <Table>
-          <StyledTableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell align="right">Price ($)</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Sizes</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </StyledTableHead>
-          <TableBody>
-            {items.length > 0 ? (
-              items.map((item) => (
-                <StyledTableRow key={item.id}>
-                  <TableCell>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                      {item.name}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      {item.description}
-                    </Typography>
-                  </TableCell>
-                  <PriceCell align="right">${item.price.toFixed(2)}</PriceCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                      {item.category.map((cat) => (
-                        <Chip key={cat} label={cat} size="small" variant="outlined" />
-                      ))}
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                      {item.sizes.map((size) => (
-                        <Chip
-                          key={size}
-                          label={size}
-                          size="small"
-                          color="primary"
-                          variant="filled"
-                        />
-                      ))}
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      onClick={(e) => handleMenuOpen(e, item.id)}
-                      title="More options"
-                    >
-                      <MoreVertIcon fontSize="small" />
-                    </IconButton>
-                  </TableCell>
-                </StyledTableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
-                  <Typography color="text.secondary">
-                    No items found matching your filters
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </StyledTableContainer>
+      <DataTable<FoodItem>
+        columns={columns}
+        data={items}
+        emptyMessage="No items found matching your filters"
+        getRowId={(row) => row.id}
+      />
 
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
         <MenuItem onClick={handleEdit}>

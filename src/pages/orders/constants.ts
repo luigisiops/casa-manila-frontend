@@ -6,7 +6,7 @@ export const mockOrders: Order[] = [
     customer_name: 'Maria Santos',
     email: 'maria@email.com',
     phone_number: '555-0101',
-    pickup_datetime: '2026-01-16T18:30:00',
+    pickup_datetime: '2025-12-25T18:30:00',
     items: [
       { id: 1, food_name: 'Adobo', quantity: 2, size: 'Regular', price: 285.0 },
       { id: 2, food_name: 'Lumpia', quantity: 1, size: 'Half Tray', price: 145.0 },
@@ -20,7 +20,7 @@ export const mockOrders: Order[] = [
     customer_name: 'Juan Dela Cruz',
     email: 'juan@email.com',
     phone_number: '555-0102',
-    pickup_datetime: '2026-01-17T19:00:00',
+    pickup_datetime: '2025-12-25T19:00:00',
     items: [
       { id: 1, food_name: 'Sinigang', quantity: 1, size: 'Large', price: 295.0 },
       { id: 2, food_name: 'Halo-Halo', quantity: 2, size: 'Large', price: 95.0 },
@@ -33,7 +33,7 @@ export const mockOrders: Order[] = [
     id: 3,
     customer_name: 'Rosa Diaz',
     phone_number: '555-0103',
-    pickup_datetime: '2026-01-18T17:45:00',
+    pickup_datetime: '2025-12-25T17:45:00',
     items: [
       { id: 1, food_name: 'Kare-Kare', quantity: 1, size: 'Regular', price: 320.0 },
       { id: 2, food_name: 'Laing', quantity: 2, size: 'Regular', price: 185.0 },
@@ -47,7 +47,7 @@ export const mockOrders: Order[] = [
     customer_name: 'Pedro Gonzales',
     email: 'pedro@email.com',
     phone_number: '555-0104',
-    pickup_datetime: '2026-01-19T20:15:00',
+    pickup_datetime: '2026-01-01T20:15:00',
     items: [
       { id: 1, food_name: 'Lechon Paksiw', quantity: 1, size: 'Large', price: 350.0 },
     ],
@@ -59,7 +59,7 @@ export const mockOrders: Order[] = [
     id: 5,
     customer_name: 'Lucia Fernandez',
     phone_number: '555-0105',
-    pickup_datetime: '2026-01-20T18:00:00',
+    pickup_datetime: '2026-01-01T18:00:00',
     items: [
       { id: 1, food_name: 'Ube Cake', quantity: 3, size: 'Slice', price: 75.0 },
       { id: 2, food_name: 'Halo-Halo', quantity: 2, size: 'Small', price: 95.0 },
@@ -73,7 +73,7 @@ export const mockOrders: Order[] = [
     customer_name: 'Carlos Rodriguez',
     email: 'carlos@email.com',
     phone_number: '555-0106',
-    pickup_datetime: '2026-01-21T19:30:00',
+    pickup_datetime: '2026-01-01T19:30:00',
     items: [
       { id: 1, food_name: 'Adobo', quantity: 1, size: 'Large', price: 285.0 },
       { id: 2, food_name: 'Kare-Kare', quantity: 2, size: 'Regular', price: 320.0 },
@@ -88,7 +88,7 @@ export const mockOrders: Order[] = [
     customer_name: 'Angela Torres',
     email: 'angela@email.com',
     phone_number: '555-0107',
-    pickup_datetime: '2026-01-22T17:00:00',
+    pickup_datetime: '2026-01-01T17:00:00',
     items: [
       { id: 1, food_name: 'Adobo', quantity: 2, size: 'Large', price: 285.0 },
       { id: 2, food_name: 'Sinigang', quantity: 2, size: 'Large', price: 295.0 },

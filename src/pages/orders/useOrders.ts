@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import type { Order, OrderStats, OrderStatus } from './types'
+import type { Order, OrderStats, OrderStatus, OrderTabStatus } from './types'
 
 export interface UseOrdersReturn {
   orders: Order[]
@@ -9,19 +9,34 @@ export interface UseOrdersReturn {
   setSearchTerm: (term: string) => void
   selectedStore: string
   setSelectedStore: (store: string) => void
-  activeTab: 'active' | 'packed' | 'completed'
-  setActiveTab: (tab: 'active' | 'packed' | 'completed') => void
+  activeTab: OrderTabStatus
+  setActiveTab: (tab: OrderTabStatus) => void
+  selectedDate: string
+  setSelectedDate: (date: string) => void
   allStores: string[]
   handleEdit: (orderId: number) => void
   handleDelete: (orderId: number) => void
   handleStatusChange: (orderId: number, newStatus: OrderStatus) => void
 }
 
+/* 
+Eventually this hook will fetch data from an API and then we can call a 
+useeffect to re-call api on change and handle sorting/filtering there
+*/
+
 export function useOrders(initialOrders: Order[]): UseOrdersReturn {
   const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedStore, setSelectedStore] = useState<string>('')
-  const [activeTab, setActiveTab] = useState<'active' | 'packed' | 'completed'>('active')
+  const [activeTab, setActiveTab] = useState<OrderTabStatus>('active')
+  const [selectedDate, setSelectedDate] = useState<string>('')
+
+  // Set initial date to today's date
+  const getInitialDate = () => {
+    return new Date().toISOString().split('T')[0]
+  }
+
+  const currentDate = selectedDate || getInitialDate()
 
   // Get unique stores
   const allStores = useMemo(() => {
@@ -38,12 +53,16 @@ export function useOrders(initialOrders: Order[]): UseOrdersReturn {
 
       const matchesStore = !selectedStore || order.store_id === selectedStore
 
-      // Filter by active tab
-      const matchesTab = order.status === activeTab
+      // Filter by active tab (all shows all statuses)
+      const matchesTab = activeTab === 'all' || order.status === activeTab
 
-      return matchesSearch && matchesStore && matchesTab
+      // Filter by date
+      const orderDate = order.pickup_datetime.split('T')[0]
+      const matchesDate = orderDate === currentDate
+
+      return matchesSearch && matchesStore && matchesTab && matchesDate
     })
-  }, [orders, searchTerm, selectedStore, activeTab])
+  }, [orders, searchTerm, selectedStore, activeTab, currentDate])
 
   // Calculate statistics
   const stats: OrderStats = {
@@ -81,6 +100,8 @@ export function useOrders(initialOrders: Order[]): UseOrdersReturn {
     setSelectedStore,
     activeTab,
     setActiveTab,
+    selectedDate: currentDate,
+    setSelectedDate,
     allStores,
     handleEdit,
     handleDelete,
